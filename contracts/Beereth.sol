@@ -1,157 +1,156 @@
-pragma solidity ^0.5.0;
 
-import "../node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
-import "../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
+pragma solidity ^0.4.0;
 
-contract EthBeer is ERC721Token, Ownable {
-    using SafeMath for uint256;
+import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 
-    mapping (string => mapping(string => uint)) payoffMatrix;
-    mapping (address => uint) userstatus;
-    mapping (address => string) userchoice;
-    mapping (address => uint) cardStaked;
+contract Beereth is ERC721Token, Ownable {
+  using SafeMath for uint256;
 
-    string public constant name = "BeerToken";
-    string public constant symbol = "BRT";
 
-    constructor() ERC721Token(name,symbol) public {
+  mapping (string => mapping(string => uint)) payoffMatrix;
+  mapping (address => uint) userstatus;
+  mapping (address => string) userchoice;
+  mapping (address => uint) cardstaked;
 
-        payoffMatrix["rock"]["rock"] = 0;
-        payoffMatrix["rock"]["paper"] = 2;
-        payoffMatrix["rock"]["scissors"] = 1;
-        payoffMatrix["paper"]["rock"] = 1;
-        payoffMatrix["paper"]["paper"] = 0;
-        payoffMatrix["paper"]["scissors"] = 2;
-        payoffMatrix["scissors"]["rock"] = 2;
-        payoffMatrix["scissors"]["paper"] = 1;
-        payoffMatrix["scissors"]["scissors"] = 0;
+  string public constant name = "BToken";
+  string public constant symbol = "BET";
 
+  constructor() ERC721Token(name,symbol) public {
+
+    payoffMatrix["Barley"]["Barley"] = 0;
+    payoffMatrix["Barley"]["Yeast"] = 2;
+    payoffMatrix["Barley"]["HOPS"] = 1;
+    payoffMatrix["Yeast"]["Barley"] = 1;
+    payoffMatrix["Yeast"]["Yeast"] = 0;
+    payoffMatrix["Yeast"]["HOPS"] = 2;
+    payoffMatrix["HOPS"]["Barley"] = 2;
+    payoffMatrix["HOPS"]["Yeast"] = 1;
+    payoffMatrix["HOPS"]["HOPS"] = 0;
+
+  }
+
+  function createCardSet5(uint a) public {
+      for(uint i=0;i<5;i++)
+      {
+         uint8 rand2 = uint8(uint256(keccak256(a, block.difficulty))%4);
+         createToken(rand2);
+         a=a+7;
+
+      }
+      userstatus[msg.sender]=0;
+  }
+
+  function createCardSet10(uint a) public {
+      for(uint i=0;i<9;i++)
+      {
+        uint8 rand2 = uint8(uint256(keccak256(a, block.difficulty))%4);
+         createToken(rand2);
+         a=a+49;
+      }
+      createToken(4);
+      userstatus[msg.sender]=0;
+  }
+
+//   function test(uint a) view returns(uint256){
+//       return uint8(uint256(keccak256(a, block.difficulty))%4);
+//   }
+
+  string _tokentype;
+  function createToken(uint num) public {
+
+    if(num==1)
+    {
+        _tokentype="Barley";
     }
-
-    function createFiveCards(uint256 seed) public {
-        uint256 nonce = seed;
-        for(uint256 i = 0; i < 5; i++)
-        {
-            uint256 randomNumber = uint256(uint256(keccak256(abi.encodePacked(nonce, block.difficulty)))%4);
-            createToken(randomNumber);
-            nonce += 7;
-        }
-        userstatus[msg.sender] = 0;
+    else if(num==2)
+    {
+        _tokentype="Yeast";
     }
-    
-    function createTenCards(uint256 seed) public {
-        uint256 nonce = seed;
-        for(uint256 i = 0; i < 9; i++)
-        {
-            uint256 randomNumber = uint256(uint256(keccak256(abi.encodePacked(nonce, block.difficulty)))%4);
-            createToken(randomNumber);
-            nonce += 49;
-        }
-        createToken(4);
-        userstatus[msg.sender] = 0;
+    else if(num==3)
+    {
+        _tokentype="HOPS";
     }
-
-    string _tokentype;
-
-    function createToken(uint256 num) public {
-
-        if(num == 1)
-        {
-            _tokentype = "Barley";
-        }
-        else if(num == 2)
-        {
-            _tokentype = "Yeast";
-        }
-        else if(num == 3)
-        {
-            _tokentype = "HOPS";
-        }
-        else
-        {
-            _tokentype = "Brewery";
-        }
-        mint(msg.sender, _tokentype);
+    else
+    {
+       _tokentype="Brewery";
     }
+    mint(msg.sender,_tokentype);
+  }
 
-    function createSpecialToken() public {
-        mint(msg.sender, "Beer");
-    }
+  function createSpecialToken() public {
+    mint(msg.sender,"Beer");
+  }
 
     // the following function in ERC721BasicToken is inherited
-    // function transferFrom(address _from,address _to,uint256 _tokenId)
-    function battle(address userTwo,uint256 cardId)
-        public
-    {
-        userstatus[msg.sender] = 1;
-        cardStaked[msg.sender] = cardId;
+  // function transferFrom(address _from,address _to,uint256 _tokenId)
+  function battle(address user2,uint cardid)
+  {
+      userstatus[msg.sender]=1;
+      cardstaked[msg.sender]=cardid;
+      if(userstatus[user2] == 1)
+      {
+          uint winner = payoffMatrix[tokenURI(cardid)][tokenURI(cardstaked[user2])];
+          if (winner ==1)
+          {
+              userstatus[msg.sender]=3;
+              userstatus[user2]=2;
+          }
+          else if (winner ==2)
+          {
+              userstatus[msg.sender]=2;
+              userstatus[user2]=2;
+          }
+      }
+  }
 
-        if(userstatus[userTwo] == 1)
-        {
-            uint256 winner = payoffMatrix[tokenURI(cardId)][tokenURI(cardStaked[userTwo])];
-            if (winner == 1)
-            {
-                userstatus[msg.sender] = 3;
-                userstatus[userTwo] = 2;
-            }
-            else if (winner == 2)
-            {
-                userstatus[msg.sender] = 2;
-                userstatus[userTwo] = 2;
-            }
-        }
-    }
+  function completebattle(address user2,uint cardid)
+  {
+      if(userstatus[msg.sender]==2)
+      {
+          transferFrom(msg.sender,user2,cardid);
+          cardstaked[msg.sender]=0;
+      }
+  }
 
-    function completebattle(address userTwo,uint256 cardId)
-        public
-    {
-        if(userstatus[msg.sender] == 2)
-        {
-            transferFrom(msg.sender,userTwo,cardId);
-            cardStaked[msg.sender] = 0;
-        }
-    }
 
-    function mint(address _to, string memory _tokenURI) internal {
-        uint256 newTokenId = _getNextTokenId();
-        _mint(_to, newTokenId);
-        _setTokenURI(newTokenId,_tokenURI);
-    }
+  function mint(address _to,string _tokenURI) internal {
+    uint256 newTokenId = _getNextTokenId();
+    _mint(_to,newTokenId);
+    _setTokenURI(newTokenId,_tokenURI);
+  }
 
-    function _getNextTokenId() private view returns(uint256){
-        return totalSupply().add(1);
-    }
+  function _getNextTokenId() private view returns(uint256){
+    return totalSupply().add(1);
+  }
 
-    function mergeMyTokens(uint256 tokenIdOne,uint256 tokenIdTwo)
-        public
-    {
-        require(tokenOwner[tokenIdOne] == msg.sender, "Sender is not token owner");
-        require(tokenOwner[tokenIdTwo] == msg.sender, "Sender is not token owner");
-        uint256 randomNumber = uint(uint(keccak256(abi.encodePacked(block.number, block.difficulty)))%4);
-        createToken(randomNumber);
-        _burn(msg.sender,tokenIdOne);
-        _burn(msg.sender,tokenIdTwo);
-    }
+  function mergemytokens(uint id1,uint id2) {
+    require(tokenOwner[id1] == msg.sender);
+    require(tokenOwner[id2] == msg.sender);
+    uint8 rand2 = uint8(uint256(keccak256(block.number, block.difficulty))%4);
+     createToken(rand2);
+     _burn(msg.sender,id1);
+     _burn(msg.sender,id2);
 
-    function generateBeer(uint256 barleyId,uint256 yeastId, uint256 hopsId, uint256 breweryId) 
-        public
-    {
-        require(tokenURI[barleyId] == "Barley", "error");
-        require(tokenURI[yeastId] == "Yeast", "error");
-        require(tokenURI[hopsId] == "HOPS", "error");
-        require(tokenURI[breweryId] == "Brewery", "error");
-        createSpecialToken();
-        _burn(msg.sender,barleyId);
-        _burn(msg.sender,yeastId);
-        _burn(msg.sender,hopsId);
-        _burn(msg.sender,breweryId);
-    }
+  }
 
-    function getMyTokens()
-        public
-        view
-        returns(uint[] memory)
-    {
-        return tokenOwner[msg.sender];
-    }
+  function GenerateBeer(uint barleyid,uint yeastid, uint hopsid, uint breweryid) {
+    require(sha3(tokenURI(barleyid))==sha3('Barley'));
+    require(sha3(tokenURI(yeastid))==sha3('Yeast'));
+    require(sha3(tokenURI(hopsid))==sha3('HOPS'));
+    require(sha3(tokenURI(breweryid))==sha3('Brewery'));
+    createSpecialToken();
+    _burn(msg.sender,barleyid);
+    _burn(msg.sender,yeastid);
+    _burn(msg.sender,hopsid);
+    _burn(msg.sender,breweryid);
+
+  }
+
+  function getMyTokens() external view returns(uint256[]){
+    return ownedTokens[msg.sender];
+  }
+
+
+
 }
