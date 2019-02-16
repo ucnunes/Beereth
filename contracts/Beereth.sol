@@ -29,7 +29,8 @@ contract Beereth is ERC721Token, Ownable {
 
   }
 
-  function createCardSet5(uint a) public {
+  function createCardSet5(uint a) public payable {
+      require(msg.value>= 0.008 ether);
       for(uint i=0;i<5;i++)
       {
          uint8 rand2 = uint8(uint256(keccak256(a, block.difficulty))%4);
@@ -40,7 +41,8 @@ contract Beereth is ERC721Token, Ownable {
       userstatus[msg.sender]=0;
   }
 
-  function createCardSet10(uint a) public {
+  function createCardSet10(uint a) public payable {
+      require(msg.value>=0.02 ether);
       for(uint i=0;i<9;i++)
       {
         uint8 rand2 = uint8(uint256(keccak256(a, block.difficulty))%4);
