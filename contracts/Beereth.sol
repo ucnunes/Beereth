@@ -15,7 +15,7 @@ contract Beereth is ERC721Token, Ownable {
   string public constant name = "BToken";
   string public constant symbol = "BET";
 
-  constructor() ERC721Token(name,symbol) public {
+  constructor() ERC721Token(name,symbol) public payable{
 
     payoffMatrix["Barley"]["Barley"] = 0;
     payoffMatrix["Barley"]["Yeast"] = 2;
@@ -152,6 +152,8 @@ contract Beereth is ERC721Token, Ownable {
     return ownedTokens[msg.sender];
   }
 
+ function () payable{
 
+ }
 
 }
