@@ -17,15 +17,15 @@ contract Beereth is ERC721Token, Ownable {
 
   constructor() ERC721Token(name,symbol) public {
 
-        payoffMatrix["rock"]["rock"] = 0;
-        payoffMatrix["rock"]["paper"] = 2;
-        payoffMatrix["rock"]["scissors"] = 1;
-        payoffMatrix["paper"]["rock"] = 1;
-        payoffMatrix["paper"]["paper"] = 0;
-        payoffMatrix["paper"]["scissors"] = 2;
-        payoffMatrix["scissors"]["rock"] = 2;
-        payoffMatrix["scissors"]["paper"] = 1;
-        payoffMatrix["scissors"]["scissors"] = 0;
+    payoffMatrix["Barley"]["Barley"] = 0;
+    payoffMatrix["Barley"]["Yeast"] = 2;
+    payoffMatrix["Barley"]["HOPS"] = 1;
+    payoffMatrix["Yeast"]["Barley"] = 1;
+    payoffMatrix["Yeast"]["Yeast"] = 0;
+    payoffMatrix["Yeast"]["HOPS"] = 2;
+    payoffMatrix["HOPS"]["Barley"] = 2;
+    payoffMatrix["HOPS"]["Yeast"] = 1;
+    payoffMatrix["HOPS"]["HOPS"] = 0;
 
   }
 
@@ -77,7 +77,7 @@ contract Beereth is ERC721Token, Ownable {
     mint(msg.sender,_tokentype);
   }
 
-  createSpecialToken() public {
+  function createSpecialToken() public {
     mint(msg.sender,"Beer");
   }
 
@@ -112,28 +112,6 @@ contract Beereth is ERC721Token, Ownable {
       }
   }
 
-//   address player1;
-//   address player2;
-//   function battle(address user2,string choice,uint cardid) {
-//       if(userstatus[user2]==1)
-//       {
-//           uint winner= payoffMatrix[userchoice[user2]][choice];
-//           if(winner==1)
-//           {
-//               winnercard =
-//           }
-//           else if(winner ==2)
-//           {
-//               transferFrom(user2,msg.sender)
-//           }
-//       }
-//       else
-//       {
-//       userchoice[msg.sender]=choice;
-//       userstatus[msg.sender]=1;
-//       cardstaked[msg.sender]=cardid;
-//       }
-//   }
 
   function mint(address _to,string _tokenURI) internal {
     uint256 newTokenId = _getNextTokenId();
@@ -156,10 +134,10 @@ contract Beereth is ERC721Token, Ownable {
   }
 
   function GenerateBeer(uint barleyid,uint yeastid, uint hopsid, uint breweryid) {
-    require(tokenURI[barleyid]=='Barley');
-    require(tokenURI[yeastid]=='Yeast');
-    require(tokenURI[hopsid]=='HOPS');
-    require(tokenURI[breweryid]=='Brewery');
+    require(sha3(tokenURI(barleyid))==sha3('Barley'));
+    require(sha3(tokenURI(yeastid))==sha3('Yeast'));
+    require(sha3(tokenURI(hopsid))==sha3('HOPS'));
+    require(sha3(tokenURI(breweryid))==sha3('Brewery'));
     createSpecialToken();
     _burn(msg.sender,barleyid);
     _burn(msg.sender,yeastid);
