@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/souradeep-das/Beereth#readme",
   "dependencies": {
+    "install": "^0.12.2",
+    "npm": "^6.8.0",
     "zeppelin-solidity": "^1.12.0"
   }
 }
