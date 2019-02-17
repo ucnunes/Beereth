@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 
-import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
-import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "../node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract Beereth is ERC721Token, Ownable {
   using SafeMath for uint256;

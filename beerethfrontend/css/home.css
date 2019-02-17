@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One|Francois+One|Play');
+
+html, body, section {
+	height: 100%;
+}
+body {
+	color: #fff;
+	text-align: center;
+}
+div {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+.xop-container {
+	display: flex;
+}
+div {
+	flex-direction: column;
+	justify-content: center;
+}
+
+.xop-left {
+	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(255, 255, 225, 0.10)), url(https://cms.qz.com/wp-content/uploads/2017/06/vitalk-buterin-ethereum-4chan-dead-e1498476626666.jpg?quality=80&strip=all);
+	background-size: cover;
+	background-position: center;
+	flex: 1;
+	padding: 1rem;
+	transition: all .2s ease-in-out;
+  text-transform: uppercase;
+  filter: grayscale(80%);
+}
+
+.xop-right {
+	background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(255, 255, 225, 0.10)), url(https://thumbor.forbes.com/thumbor/1280x868/https%3A%2F%2Fblogs-images.forbes.com%2Flaurashin%2Ffiles%2F2018%2F02%2Fbuterin.jpg);
+	background-size: cover;
+	background-position: center;
+	flex: 1;
+	padding: 1rem;
+	transition: all .2s ease-in-out;
+  text-transform: uppercase;
+
+}
+.xop-left:hover, .xop-right:hover {
+	transform: scale(0.95);
+  filter: hue-rotate(-30deg);
+}
+.xop-container h1 {
+	letter-spacing: 2px;
+  font-family: 'Francois One', sans-serif;
+	font-size: 3rem;
+}
+.xop-button {
+	border-radius: 2px;
+	color: #fff;
+	background-color: #333;
+	padding: 10px 6px;
+	margin: 0 1%;
+	text-align: center;
+  font-family: 'Play', sans-serif;
+	text-decoration: none;
+  letter-spacing: 1px;
+	display: inline-block;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.5s;
+	width: 150px;
+
+}
+
+.xop-button:hover {
+	background: #fff;
+	color: #333;
+}
+
+@media only screen and (max-width: 600px) {
+  .xop-container {
+    flex-direction: column;
+  }
+
+}
