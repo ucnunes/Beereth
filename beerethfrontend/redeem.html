@@ -31,9 +31,9 @@
 
 	<div class="topnav">
 	  <a href="/index.html">Home</a>
-	  <a class="active" href="mytokens.html">My Tokens</a>
+	  <a href="mytokens.html">My Tokens</a>
 		<a href="battle.html">Battle Room</a>
-		<a href="redeem.html">Redeem for a Beer</a>
+		<a class="active" href="redeem.html">Redeem for a Beer</a>
 	</div>
 	<br><br>
 
@@ -49,21 +49,31 @@
 			<div class="wrap-contact3">
 				<form class="contact3-form validate-form">
 					<span class="contact3-form-title">
-						Merge!
+						Get A Beer!
 					</span>
 
 
 
 
 
-					<div class="wrap-input3 validate-input" data-validate = "First tokenid is required">
-						<input class="input3" type="text" name="first" id="first" placeholder="First token Id">
+					<div class="wrap-input3 validate-input" data-validate = "Barley tokenid is required">
+						<input class="input3" type="text" name="barley" id="barley" placeholder="Barley token Id">
 						<span class="focus-input3"></span>
 					</div>
 
 
 					<div class="wrap-input3 validate-input" data-validate = "Second tokenid is required">
-						<input class="input3" type="text" name="second" id="second" placeholder="Second Token Id">
+						<input class="input3" type="text" name="yeast" id="yeast" placeholder="Yeast Token Id">
+						<span class="focus-input3"></span>
+					</div>
+
+          <div class="wrap-input3 validate-input" data-validate = "HOPS tokenid is required">
+						<input class="input3" type="text" name="hops" id="hops" placeholder="HOPS Token Id">
+						<span class="focus-input3"></span>
+					</div>
+
+          <div class="wrap-input3 validate-input" data-validate = "Brewery tokenid is required">
+						<input class="input3" type="text" name="brewery" id="brewery" placeholder="Brewery Token Id">
 						<span class="focus-input3"></span>
 					</div>
 
@@ -774,31 +784,32 @@ for(var j = 0; j < result1.length; j++) {
 
  test.tokenURI(result1[j],function(error,result){
 
-if(result == "Barley")
-{
-	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/barley.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
- document.getElementById("box").innerHTML = html;
-}
-else if(result == "Yeast")
-{
-	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/yeast.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
-	document.getElementById("box").innerHTML = html;
-}
-else if(result == "Brewery")
-{
-	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/brewer.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
-	document.getElementById("box").innerHTML = html;
-}
-else if(result == "HOPS")
-{
-	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/hops.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
- document.getElementById("box").innerHTML = html;
-}
-else if (result == "Beer")
-{
-	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/main.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
- document.getElementById("box").innerHTML = html;
-}
+   if(result == "Barley")
+   {
+   	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/barley.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
+    document.getElementById("box").innerHTML = html;
+   }
+   else if(result == "Yeast")
+   {
+   	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/yeast.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
+   	document.getElementById("box").innerHTML = html;
+   }
+   else if(result == "Brewery")
+   {
+   	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/brewer.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
+   	document.getElementById("box").innerHTML = html;
+   }
+   else if(result == "HOPS")
+   {
+   	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/hops.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
+    document.getElementById("box").innerHTML = html;
+   }
+   else if (result == "Beer")
+   {
+   	html+="<li class=\"list-group-item\"><p><div class=\"col-md-4\">" + "<kbd style=\"background-color:rgb(0, 150, 50);\"\">Card:"+ result +  "<br><img src=\"images/main.jpg\"</a>"+ "</div></p></li>&nbsp;&nbsp;&nbsp;";
+    document.getElementById("box").innerHTML = html;
+   }
+
 
 
 
@@ -814,7 +825,7 @@ else {
 });
 
 $("#Submit").click(function() {
-	test.mergemytokens($("#first").val(),$("#second").val(),(error,result) => (console.log(result)));
+	test.GenerateBeer($("#barley").val(),$("#yeast").val(),$("#hops").val(),$("#brewery").val(),(error,result) => (console.log(result)));
 });
 
 

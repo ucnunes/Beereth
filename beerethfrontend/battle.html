@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vote</title>
+    <title>Brewgnu</title>
 
     <link rel="stylesheet" type="text/css" href="main.css">
 
@@ -12,27 +12,40 @@
 </head>
 <body>
   <div class="topnav">
- <a class="active" href="index.html">Home</a>
+ <a href="index.html">Home</a>
  <a href="mytokens.html">My Tokens</a>
- <a href="battle.html">Battle Room</a>
+ <a class="active" href="battle.html">Battle Room</a>
  <a href="redeem.html">Redeem for a Beer</a>
 </div>
-    <div class="container">
+<div class="container">
 
-<center>
-        <h1>BUY YOUR STACK !!</h1>
-        <br><br>
+    <h1>BattleGround</h1>
 
-        <h2 id="five">The 5 card Deck</h2>
-        <button id="fivebutton">Buy 0.008 Ether</button>
+    <h2 id="instructor"></h2>
 
-        <h2 id="ten">The 10 card Deck</h2>
-        <button id="tenbutton">Buy 0.02 Ether</button>
+    <label for="name" class="col-lg-2 control-label">Opponent Address</label>
+    <input id="oadd" type="text">
 
-        <span id="votehistory"></span>
-        <h3 id="hist"></h3>
-</center>
+    <label for="name" class="col-lg-2 control-label">Card to Stake</label>
+    <input id="card" type="text">
 
+    <button id="stake">Stake</button>
+
+
+</div>
+<div class="container">
+
+    <h1>ShowDown</h1>
+    <label for="name" class="col-lg-2 control-label">Opponent Address</label>
+    <input id="oadd" type="text">
+
+    <label for="name" class="col-lg-2 control-label">Card Staked</label>
+    <input id="card" type="text">
+
+    <button id="showdown">Complete</button>
+
+
+</div>
 
 
 
@@ -711,16 +724,16 @@ var test = testContract.at("0xf29c0637c006376d0be290e329378edf8456db7c");
 console.log(test);
 
 
-
-
-$("#fivebutton").click(function() {
-  num = Math.random() * (99999-10000) + 10000;
-  test.createCardSet5(num,{from: web3.eth.accounts[0], gas: 3000000, value: 8000000000000000 },(error,result) => (console.log(result)));
+$("#stake").click(function() {
+  oadds=$("#oadd").val();
+  cardid=$('#card').val();
+  test.battle($("#oadd").val(),$('#card').val(),(error,result) => (console.log(result)));
+  $('#instructor').html('Get Ready for ShowDown');
 });
-
-$("#tenbutton").click(function() {
-  num = Math.random() * (99999-10000) + 10000;
-  test.createCardSet10(num,{from: web3.eth.accounts[0], gas: 3000000, value: 20000000000000000 },(error,result) => (console.log(result)));
+$("#showdown").click(function() {
+  oadds=$("#oadd").val();
+  cardid=$('#card').val();
+  test.completebattle(oadds,cardid,(error,result) => (console.log(result)));
 });
 
 
