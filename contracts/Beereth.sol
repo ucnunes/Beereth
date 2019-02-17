@@ -1,7 +1,7 @@
 pragma solidity ^0.4.0;
 
-import "../node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
-import "../node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
+import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/token/ERC721/ERC721Token.sol";
+import "https://github.com/souradeep-das/Beereth/node_modules/zeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract Beereth is ERC721Token, Ownable {
   using SafeMath for uint256;
@@ -100,7 +100,7 @@ contract Beereth is ERC721Token, Ownable {
           else if (winner ==2)
           {
               userstatus[msg.sender]=2;
-              userstatus[user2]=2;
+              userstatus[user2]=3;
           }
       }
   }
@@ -150,6 +150,10 @@ contract Beereth is ERC721Token, Ownable {
 
   function getMyTokens() external view returns(uint256[]){
     return ownedTokens[msg.sender];
+  }
+
+  function getcardformat(uint cardid) constant returns(uint,string){
+      return (cardid,tokenURI(cardid));
   }
 
  function () payable{

@@ -500,6 +500,29 @@
 	},
 	{
 		"constant": true,
+		"inputs": [
+			{
+				"name": "cardid",
+				"type": "uint256"
+			}
+		],
+		"name": "getcardformat",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [],
 		"name": "getMyTokens",
 		"outputs": [
@@ -707,7 +730,7 @@
 ]);
 
 
-var test = testContract.at("0x8b6027939d0b28e0ec3f7533b47ba2082048e1ff");
+var test = testContract.at("0x3e811e7aaea26599d21d5be539ee642233b37b19");
 console.log(test);
 
 
